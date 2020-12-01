@@ -1,0 +1,15 @@
+- from:
+    uri: "timer:tick"
+    parameters:
+      period: 10000
+    steps:
+      - to: "xchange:binance?currencyPair=BTC/USDT&service=marketdata&method=ticker"
+      - marshal:
+          json: {}
+      - log:
+          message: "Sending BTC/USDT data to the broker: ${body}"
+      - set-header:
+          constant: market.btc.usdt
+          name: CE-Type
+      - to: "knative:event"
+
