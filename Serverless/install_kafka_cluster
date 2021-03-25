@@ -1,0 +1,19 @@
+oc new-project amex-kafka
+ 3804  curl -L \\nhttps://github.com/strimzi/strimzi-kafka-operator\\n/releases/download/0.20.0/strimzi-cluster-operator-0.20.0.yaml \\n  | sed 's/namespace:.*/namespace: amex-kafka/' \\n  | oc apply -n amex-kafka -f -
+ 3805  oc get po
+ 3806  oc api-resources --api-group='kafka.strimzi.io'
+ 3807  pwd
+ 3808  cd ../..
+ 3809  ls
+ 3810  cd knative-tutorial
+ 3811  ls
+ 3812  pwd
+ 3813  cd eventing
+ 3814  ls
+ 3815  oc -n amex-kafka apply -f kafka-broker-my-cluster.yaml
+ 3816* watch oc get po
+ 3817* oc get po -w
+ 3818  oc create -f kafka-topic-my-topic.yaml
+ 3819  oc get kafkatopics
+ 3820  oc run kafka-producer -ti --image=registry.redhat.io/amq7/amq-streams-kafka-26-rhel7:1.6.0 --rm=true --restart=Never -- bin/kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap:9092 --topic my-topic\n
+ 3821* oc run kafka-consumer -ti --image=registry.redhat.io/amq7/amq-streams-kafka-26-rhel7:1.6.0 --rm=true --restart=Never -- bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --from-beginning\n
